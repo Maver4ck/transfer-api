@@ -1,0 +1,30 @@
+server:
+  port: 8081
+  error:
+    include-message: always
+
+spring:
+  application:
+    name: transfer-api
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/application
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  liquibase:
+    contexts: prod
+    change-log: classpath:db/changelog.xml
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+  redis:
+    host: localhost
+    port: 6379
+
+jwt:
+  secret: c2VjcmV0X2tleWFzZGFzZGFzZGFzZGRkZGRkZGRkZGRkZGRkZGRkZGRkYXNkYXNk
