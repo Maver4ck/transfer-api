@@ -40,21 +40,6 @@ public class LoggingFilter extends OncePerRequestFilter {
                     "Content-Type: {}\n" +
                     "Body: {}";
 
-    private static String inputStreamToString(InputStream inputStream) throws IOException {
-        try (final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            final StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line).append("\n");
-            }
-            return sb.toString();
-        }
-    }
-
-    private static boolean isMultipartType(String contentType) {
-        return contentType != null && contentType.startsWith("multipart/");
-    }
-
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -93,5 +78,20 @@ public class LoggingFilter extends OncePerRequestFilter {
                 isMultipartType(response.getContentType())
                         ? StringUtils.EMPTY
                         : new String(response.getContentAsByteArray(), StandardCharsets.UTF_8));
+    }
+
+    private static String inputStreamToString(InputStream inputStream) throws IOException {
+        try (final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            final StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line).append("\n");
+            }
+            return sb.toString();
+        }
+    }
+
+    private static boolean isMultipartType(String contentType) {
+        return contentType != null && contentType.startsWith("multipart/");
     }
 }
